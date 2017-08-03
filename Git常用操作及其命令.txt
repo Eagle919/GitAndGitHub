@@ -1,0 +1,335 @@
+一、自己跟自己玩
+	
+	●准备工作
+		1.创建一个目录作为Git工作区，例如：D:\WorkspaceGit
+		2.创建一个目录作为正在开发的工程，例如：D:\WorkspaceGit\oa
+		3.在工程目录下执行Git仓库初始化操作$ git init
+			$ git init
+			Initialized empty Git repository in D:/Git/WorkspaceGit/oa/.git/
+			Snow@Arvan91 MINGW64 /d/Git/WorkspaceGit/oa (master)
+
+
+		4.设置用户签名信息
+			①全局有效
+				$ git config --global user.name "fengjie_global"
+				$ git config --global user.email "fengjie_global@atguigu.com"
+				在用户家目录/.gitconfig文件中查看配置结果
+			②当前工程有效
+				$ git config user.name "fengjie"
+				$ git config user.email "fengjie@atguigu.com"
+				在工程目录/.git/config文件中查看配置结果
+	
+	●实验1：把新创建的文件提交到本地库
+		1.新建用于进行Git操作的文本文件，例如：D:\WorkspaceGit\oa\oa.txt
+			$ touch oa.txt
+			$ vim oa.txt
+			……
+		2.查看当前的本地状态
+			$ git status
+		3.将新创建的文件添加到暂存区，然后再查看本地状态
+			$ git add
+			$ git status
+		4.将暂存区文件提交到本地库，然后再查看本地状态
+			$ git commit -m "My First commit." oa.txt
+			$ git status
+	
+	●实验2：把修改过的文件提交到本地库
+		1.修改文件，并查看本地状态
+			$ vim oa.txt
+			$ git status
+		2.将文件修改添加到暂存区
+			$ git add oa.txt
+			$ git status
+		3.提交
+			$ git commit -m "My Second commit." oa.txt
+			$ git status
+	
+	●实验3：版本回退
+		1.以完整格式查看本地库状态
+			$ git log
+		2.以单行模式查看本地库状态
+			$ git log --pretty=oneline
+		3.后退一个版本
+			$ git reset --hard HEAD^
+		4.后退两个版本
+			$ git reset --hard HEAD~2
+			
+	●实验4：版本穿越
+		1.查看所有操作的历史记录
+			$ git reflog
+		2.回到指定版本号的版本
+			$ git reset --hard [具体版本号，例如：1f9a527等]
+	
+	●实验5：把文件恢复为本地库中的最新版
+		1.把文件内容改乱
+			vim oa.txt
+		2.把文件恢复为最新版
+			$ git checkout -- oa.txt
+	
+	●实验6：从暂存区撤回操作
+		1.修改文件
+			vim oa.txt
+			$ git status
+		2.添加到暂存区
+			$ git add oa.txt
+			$ git status
+		3.从暂存区撤回
+			$ git reset oa.txt
+	
+	●实验7：永久删除文件
+		1.从工作区中删除文件
+			rm oa.txt
+			$ git status
+		2.将删除操作添加到暂存区
+			$ git add oa.txt
+			$ git status
+		3.将删除操作提交到本地库
+			$ git commit -m "operation of remove" oa.txt
+			$ git status
+	
+	●实验8：撤销删除操作
+		1.从工作区中删除文件
+			rm regret.txt
+			$ git status
+		2.将删除操作添加到暂存区
+			$ git add regret.txt
+			$ git status
+		3.从本地库取回文件的最新版
+			$ git reset --hard HEAD
+	
+	●实验9：保留工作区中的文件，但从暂存区及本地库中删除
+		1.从暂存区删除
+			$ git rm -- cached .project
+			$ git status
+		2.将暂存区中的删除操作提交到本地库
+			$ git commit -m "specail remove"
+			$ git status
+	
+	●实验10：比较文件
+		1.将工作区中的文件和暂存区进行比较
+			$ git diff abc.txt
+		2.将工作区中的文件和本地库进行比较
+			$ git diff HEAD abc.txt
+	●实验11：分支操作
+		1.创建分支
+			$ git branch [分支名，例如：hot_fix]
+		2.查看分支
+			$ git branch -v
+		3.切换到hot_fix分支
+			$ git checkout hot_fix
+		4.提交修改
+			$ vim abc.txt
+			$ git add abc.txt
+			$ git commit -m "commit for branch" abc.txt
+		5.查看分支版本
+			$ git branch -v
+		6.切换回master分支
+			$ git checkout master
+		7.合并分支
+			$ git merge hot_fix
+		8.编辑冲突
+			$ vim abc.txt
+		9.重新提交修改
+			$ git add abc.txt
+			$ git commit -m "commit for branch" abc.txt
+			
+二、大家一起玩
+	●准备工作
+		1.注册邮箱账号
+			atguigu_2017_ybuq@126.com/atguigu005
+			atguigu_2017_lhuc@126.com/atguigu005
+			atguigu_2017_east@126.com/atguigu005
+		2.注册GitHub账号
+			atguigu2017ybuq/atguigu_2017_ybuq@126.com/atguigu005
+			atguigu2017lhuc/atguigu_2017_lhuc@126.com/atguigu005
+			atguigu2017east/atguigu_2017_east@126.com/atguigu005
+		3.创建工作目录
+			D:\WorkspaceGit_ybuq
+			D:\WorkspaceGit_lhuc
+			D:\WorkspaceGit_east
+	●实验1：把本地库中的文件推送到GitHub
+		1.创建工程目录并初始化
+			D:\WorkspaceGit_ybuq\jianfa
+			$ git init
+		2.设置用户签名
+			$ git config user.name atguigu2017ybuq
+			$ git config user.email atguigu_2017_ybuq@126.com
+		3.创建文件并提交到本地库
+			$ vim jianpu.txt
+			$ git add jianpu.txt
+			$ git commit -m "jianpu commit" jianpu.txt
+		4.在GitHub上创建一个repository，并复制地址
+			https://github.com/atguigu2017ybuq/jianfa.git
+		5.在本地GitBash中添加远程访问地址的别名
+			$ git remote add origin https://github.com/atguigu2017ybuq/jianfa.git
+		6.将本地库中的某个分支推送到GitHub上
+			$ git push origin master
+	
+	●实验2：把文件从GitHub上克隆到本地
+		从GitHub上找到“Clone or download”，复制拉取地址
+		$ git https://github.com/atguigu2017ybuq/jianfa.git
+	
+	●实验3：添加项目成员
+		1.在GitHub上对项目成员发出邀请
+		2.被邀请成员接受邀请
+	
+	●实验4：项目成员将本地修改推送到GitHub上
+		1.本地修改文件并提交到本地库
+			$ vim jianpu.txt
+			$ git add jianpu.txt
+			$ git commit -m "for remote commit" jianpu.txt
+		2.推送
+			$ git push origin master
+			
+	●实验5：将项目成员的修改从GitHub上拉取到本地
+		$ git pull origin master
+	
+	●实验6：制造冲突并解决
+		1.项目成员岳不群修改jianpu.txt第3行为：AAAAAAAAAA
+		2.项目成员令狐冲修改jianpu.txt第3行为：BBBBBBBBBB
+		3.岳不群将修改推送到GitHub
+		4.令狐冲将修改推送到GitHub失败
+		5.令狐冲从GitHub拉取文件
+		6.使用VIM编辑器编辑冲突
+		7.令狐冲重新推送
+	
+	●实验7：团队外成员贡献代码
+		1.令狐冲从GitHub上找到“Clone or download”，复制拉取地址，发送给团队外成员：东方不败
+		2.东方不败登录自己的GitHub
+		3.访问令狐冲发给自己的拉取地址，点击Fork
+		4.东方不败将项目克隆到本地
+		5.东方不败在本地库进行修改并推送到自己的GitHub
+		6.创建pull request
+			New pull request
+		7.在文件对比页面点击Create pull request按钮
+		8.填写表单再次点击Create pull request按钮
+		9.岳不群通过Pull requests选项卡查看东方不败发送来的pull request
+		10.岳不群可以点击Files changed选项卡查看文件变更
+		11.如果确认代码可用那么回到Conversation选项卡点击Merge pull request
+		12.填写注释信息后点击Confirm merge
+		13.拉取到本地即可在变更后的代码基础上继续开发
+		
+	●福利：SSH免密码登录
+		1.进入当前用户的家目录
+			$ cd ~
+		2.删除.ssh目录
+			$ rm -rvf .ssh
+		3.运行命令生成.ssh密钥文件
+			$ ssh-keygen -t rsa -C atguigu_2017_ybuq@126.com
+		4.进入.ssh目录查看文件列表
+			$ cd .ssh
+			$ ls -lF
+		5.查看id_rsa.pub文件内容
+			$ cat id_rsa.pub
+		6.复制id_rsa.pub文件内容，登录GitHub，点击用户头像→Settings→SSH and GPG keys
+		7.New SSH Key
+			输入复制的密钥信息
+		8.回到Git bash创建远程地址别名
+			git remote add origin_ssh git@github.com:atguigu2017ybuq/jianfa.git
+		9.推送文件进行测试
+
+三、在Eclipse里玩
+	1.初始化资源库
+		①设置用户签名
+			全局有效
+			本地工程有效
+		②创建一个工程
+		③Team→Share Project
+		④选中Git，下一步
+		⑤勾选：Use or create repository in ...
+		⑥不勾选本工程
+		⑦点击Create Repository
+			相当于执行git init
+		⑧finish
+		⑨为当前工程设置用户签名
+			Window→preferences→Team→Git→Configuration→Repository Settings→Add Entry
+			
+			key处输入user.name
+			value处输入atguigu2017ybuq
+			
+			key处输入user.email
+			value处输入atguigu_2017_ybuq@126.com
+
+	2.本地提交
+	3.远程推送
+		①创建与当前工程对应的远程库
+		②复制远程库地址，HTTPS或SSH
+		③到Eclipse中SSH配置位置确认.ssh目录位置
+			Window→preferences→General→Network Connections→SSH2
+		④工程→team→remote→push...	⑤将GitHub上的URL地址粘贴到当前界面的URI位置，如果是HTTP地址需要输入用户名、密码。Next。
+		⑥选择本地源分支与对应的目标分支
+		⑦Add All Branches Spec
+			Next→Finish
+		⑧如果想要提交到别人的远程库同样需要邀请加入并接受，成为项目成员后才可以推送修改的内容。
+	4.远程拉取
+		①Import→Git→Projects from Git
+		②Clone URI
+		③从GitHub上粘贴HTTPS格式的URL地址
+		④输入用户名、密码
+		⑤Next、Next
+		⑥在Directory位置指定一个本地目录，比如当前工作区，可以创建新的目录
+		⑦Next、Next
+		⑧选择Import as general Project
+	5.转换工程类型
+		
+
+==============================================================================================================
+拓展知识
+
+分支（branch）：
+	
+	前提：本地仓库中已经有文件 既：在此操作之前已经进行 git add file_name 和 git commit file_name的操作
+	
+	* 新建文件命令： touch fileName 
+	  编辑文件命令： vim fileName
+	
+	① git branch branch_name 建立一个名字叫做branch_name 的分支
+
+	② git branch -v 可以查看目前都有哪些分支，当前分支高亮显示
+
+	③ git checkout checkout_name 切换到checkout_name分支 然后checkout_name高亮显示
+								 并且接下来的修改只对checkout_name分支有影响
+
+	*  cat good.txt 查看good.txt文件内容
+
+	④ 分支合并：
+		[1] 切换到主分支 ： git checkout merge_name
+		[2] 合并目标分支 ： git merge branch_name
+		表示：将分支branch_name合并到主干merge_name上
+
+	* git add add_filename 添加文件add_filename到暂存区
+
+	  git commit -m "this is commit content" commit_filename 添加文件add_filename到暂存区
+	并且文件添加说明：this is commit content
+	
+	
+============================================================================================
+
+GitHub
+
+	①命令： $ git remote  add origin https://github.com/atguigu2017ybuq/EagleJF.git
+	 含义： 根据远程url地址创建一个在本地的远程库地址的别名
+	 
+   ②命令：$ git push origin master
+	含义： 将本地库的文件推送到云端库中
+
+	③ $ git clone https://github.com/atguigu2017ybuq/EagleJF.git hsjf_lhuc
+	  将云端库的代码克隆到本地 并且举个别名叫 hsjf_lhuc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
